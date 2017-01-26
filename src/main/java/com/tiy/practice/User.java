@@ -12,7 +12,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    int id;
+    Integer id;
 
     @Column(nullable = false)
     String firstName;
@@ -34,8 +34,11 @@ public class User {
 
 
 
+    public User() {
 
-    public User(int id, String firstName, String lastName, String company, String position, String email, String password) {
+    }
+
+    public User(Integer id, String firstName, String lastName, String company, String position, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,11 +48,11 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

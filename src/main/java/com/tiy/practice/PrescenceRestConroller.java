@@ -32,35 +32,36 @@ public class PrescenceRestConroller {
     }
 
     @RequestMapping(path = "/add_user.json", method = RequestMethod.POST)
-        public List<User> add_user(String firstName, String lastName, String company, String position, String email, String password) {
+        public User add_user(@RequestBody User user) {
 
-        List<User> userList = new ArrayList<>();
+//        List<User> userList = new ArrayList<>();
 
-        if (firstName != null) {
-            userList = users.findByFirstName(firstName);
-        }
-
-        if (lastName != null) {
-            userList = users.findByLastName(lastName);
-        }
-
-        if (company != null) {
-            userList = users.findByCompany(company);
-        }
-
-        if (position != null) {
-            userList = users.findByFirstName(position);
-        }
-
-        if (email != null) {
-            userList = users.findByEmail(email);
-        }
-
-        if (password != null) {
-            userList = users.findByPassword(password);
-
-        }
-        return userList;
+//        if (firstName != null) {
+//            userList = users.findByFirstName(firstName);
+//        }
+//
+//        if (lastName != null) {
+//            userList = users.findByLastName(lastName);
+//        }
+//
+//        if (company != null) {
+//            userList = users.findByCompany(company);
+//        }
+//
+//        if (position != null) {
+//            userList = users.findByPosition(position);
+//        }
+//
+//        if (email != null) {
+//            userList = users.findByEmail(email);
+//        }
+//
+//        if (password != null) {
+//            userList = users.findByPassword(password);
+//
+//        }
+        users.save(user);
+        return user;
     }
 
 }

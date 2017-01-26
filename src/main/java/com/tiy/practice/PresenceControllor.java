@@ -1,5 +1,6 @@
 package com.tiy.practice;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,10 +11,12 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by crci1 on 1/25/2017.
  */
-
 //Register user GET Request
 @Controller
+
 public class PresenceControllor {
+    @Autowired
+    UserRepository users;
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpSession session) throws Exception {
