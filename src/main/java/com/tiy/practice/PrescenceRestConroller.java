@@ -32,7 +32,7 @@ public class PrescenceRestConroller {
     }
 
     @RequestMapping(path = "/add_user.json", method = RequestMethod.POST)
-        public void add_user(String firstName, String lastName, String company, String position, String email, String password) {
+        public List<User> add_user(String firstName, String lastName, String company, String position, String email, String password) {
 
         List<User> userList = new ArrayList<>();
 
@@ -60,6 +60,7 @@ public class PrescenceRestConroller {
             userList = users.findByPassword(password);
 
         }
+        return userList;
     }
 
 }
