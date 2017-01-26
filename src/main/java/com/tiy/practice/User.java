@@ -38,7 +38,8 @@ public class User {
 
     }
 
-    public User(String firstName, String lastName, String company, String position, String email, String password) {
+    public User(Integer id, String firstName, String lastName, String company, String position, String email, String password) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.company = company;
