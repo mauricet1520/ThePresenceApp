@@ -38,8 +38,7 @@ public class User {
 
     }
 
-    public User(Integer id, String firstName, String lastName, String company, String position, String email, String password) {
-        this.id = id;
+    public User(String firstName, String lastName, String company, String position, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.company = company;
