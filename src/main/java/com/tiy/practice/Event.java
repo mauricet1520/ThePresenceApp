@@ -1,6 +1,7 @@
 package com.tiy.practice;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * Created by crci1 on 1/27/2017.
@@ -23,15 +24,29 @@ public class Event {
     @Column(nullable = false)
     String address;
 
+    @Column(nullable = false)
+    java.sql.Timestamp time;
+
     public Event() {
-        
+
     }
 
-    public Event(Integer id, String name, String location, String address) {
+    public Event(Integer id, String name, String location, String address, java.sql.Timestamp time) {
         this.id = id;
         this.name = name;
         this.location = location;
         this.address = address;
+        this.time = time;
+    }
+
+
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 
     public Integer getId() {
