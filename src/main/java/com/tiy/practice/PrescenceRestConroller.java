@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,15 +43,24 @@ public class PrescenceRestConroller {
     }
 
     @RequestMapping(path = "/add_event.json", method = RequestMethod.POST)
-        public Event add_event(@RequestBody Event event) {
-        events.save(event);
+        public Event add_event(@RequestBody Event theEvent) {
 
-        return event;
+
+        return theEvent;
     }
 
     @RequestMapping(path = "/get_events.json", method = RequestMethod.GET)
     public List<Event> get_events() {
+        Event theEvent = new Event(null, "Iron Pints", "Iron Yard", "Atlanta", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY),28,1,5)));
+        Event secondEvent = new Event(null, "Java Crash Course", "Iron Yard", "Atlanta", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY),29,8,5)));
+        Event thirdEvent = new Event(null, "PTA meeting", "Dacula High School", "Dacula", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.MARCH),20,7,5)));
+
+
         List<Event> eventList = new ArrayList<>();
+
+        eventList.add(theEvent);
+        eventList.add(secondEvent);
+        eventList.add(thirdEvent);
 
         Iterable<Event> allEvents = events.findAll();
         for (Event event : allEvents) {
