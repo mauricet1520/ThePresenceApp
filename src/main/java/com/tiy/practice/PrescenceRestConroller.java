@@ -51,9 +51,9 @@ public class PrescenceRestConroller {
 
     @RequestMapping(path = "/get_events.json", method = RequestMethod.GET)
     public List<Event> get_events() {
-        Event theEvent = new Event(null, "Iron Pints", "Iron Yard", "Atlanta", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY),28,1,5)));
-        Event secondEvent = new Event(null, "Java Crash Course", "Iron Yard", "Atlanta", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY),29,8,5)));
-        Event thirdEvent = new Event(null, "PTA meeting", "Dacula High School", "Dacula", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.MARCH),20,7,5)));
+        Event theEvent = new Event(1, "Iron Pints", "Iron Yard", "Atlanta", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY),28,1,5)));
+        Event secondEvent = new Event(2, "Java Crash Course", "Iron Yard", "Atlanta", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY),29,8,5)));
+        Event thirdEvent = new Event(3, "PTA meeting", "Dacula High School", "Dacula", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.MARCH),20,7,5)));
 
 
         List<Event> eventList = new ArrayList<>();
