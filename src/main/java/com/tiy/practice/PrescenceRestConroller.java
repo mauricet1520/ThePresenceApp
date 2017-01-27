@@ -30,10 +30,11 @@ public class PrescenceRestConroller {
     }
 
     @RequestMapping(path = "/add_user.json", method = RequestMethod.POST)
-        public void add_user(@RequestBody User user) {
+        public User add_user(@RequestBody User user) {
+
 
         users.save(user);
-        
+        return user;
     }
 
 }
