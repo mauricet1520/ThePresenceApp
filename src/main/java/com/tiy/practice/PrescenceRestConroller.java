@@ -22,8 +22,6 @@ public class PrescenceRestConroller {
     public List<User> get_user() {
         List<User> userList = new ArrayList<>();
 
-
-
         Iterable<User> allUsers = users.findAll();
         for (User user : allUsers) {
             userList.add(user);
@@ -32,36 +30,10 @@ public class PrescenceRestConroller {
     }
 
     @RequestMapping(path = "/add_user.json", method = RequestMethod.POST)
-        public User add_user(@RequestBody User user) {
+        public void add_user(@RequestBody User user) {
 
-
-
-//        if (firstName != null) {
-//            userList = users.findByFirstName(firstName);
-//        }
-//
-//        if (lastName != null) {
-//            userList = users.findByLastName(lastName);
-//        }
-//
-//        if (company != null) {
-//            userList = users.findByCompany(company);
-//        }
-//
-//        if (position != null) {
-//            userList = users.findByPosition(position);
-//        }
-//
-//        if (email != null) {
-//            userList = users.findByEmail(email);
-//        }
-//
-//        if (password != null) {
-//            userList = users.findByPassword(password);
-//
-//        }
         users.save(user);
-        return user;
+        
     }
 
 }
