@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
+import java.util.Scanner;
 
 import static org.junit.Assert.*;
 
@@ -44,7 +46,7 @@ public class UserTest {
             size++;
         }
 
-        User testUser = new User(null, "Maurice", "Thomas", "Iron Yard", "student", "mauricet1520@gmail.com", "password");
+        User testUser = new User(null, "Maurice", "Thomas", "Iron Yard", "student", "mauricet1520@gmail.com", "password", null, false);
         user.save(testUser);
 
         assertNotNull(testUser.getId());
@@ -106,6 +108,19 @@ public class UserTest {
         event.delete(testSecondEvent);
 
 
+    }
+
+    @Test
+    public void testImage(){
+        User file = new User();
+        file.setImage("unit-test-file.jpg");
+        try {
+            String content = new Scanner(new File("test.txt")).useDelimiter("\\Z").next();
+            System.out.println("Content length: " + content.length());
+            file.setImage(content);
+        } catch (Exception exception) {
+            System.out.println("Unable to read file with exception: " + exception.getMessage());
+        }
     }
 
 

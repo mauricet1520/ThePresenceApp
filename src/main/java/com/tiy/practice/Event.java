@@ -39,8 +39,6 @@ public class Event {
         this.time = time;
     }
 
-
-
     public Timestamp getTime() {
         return time;
     }

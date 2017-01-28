@@ -32,13 +32,18 @@ public class User {
     @Column(nullable = false)
     String password;
 
+    @Column(nullable = true)
+    @Lob
+    private String image;
 
+    @Column
+    boolean showImage;
 
     public User() {
 
     }
 
-    public User(Integer id, String firstName, String lastName, String company, String position, String email, String password) {
+    public User(Integer id, String firstName, String lastName, String company, String position, String email, String password, String image, boolean showImage) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,6 +51,24 @@ public class User {
         this.position = position;
         this.email = email;
         this.password = password;
+        this.image = image;
+        this.showImage = showImage;
+    }
+
+    public boolean isShowImage() {
+        return showImage;
+    }
+
+    public void setShowImage(boolean showImage) {
+        this.showImage = showImage;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Integer getId() {

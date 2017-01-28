@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
  */
 //Register user GET Request
 @Controller
-
 public class PresenceControllor {
     @Autowired
     UserRepository users;
