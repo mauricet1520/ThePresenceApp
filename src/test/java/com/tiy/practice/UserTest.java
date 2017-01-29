@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.After;
+import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
 import static org.junit.Assert.*;
 
 /**
@@ -227,8 +229,12 @@ public class UserTest {
        assertNotNull(checkGuest1.getContactRequests());
        assertNotNull(checkGuest2.getContactRequests());
 
-        guest.deleteAll();
-        requestRepository.deleteAll();
+        requestRepository.delete(request);
+        guest.delete(currentGuest);
+        guest.delete(otherGuest);
+
+//        guest.deleteAll();
+//        requestRepository.deleteAll();
 
 
 

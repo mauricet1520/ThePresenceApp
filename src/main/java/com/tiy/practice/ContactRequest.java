@@ -19,7 +19,8 @@ public class ContactRequest {
     private Guest guest;
 
 
-    @ManyToOne // <--- note that you have properties specified here - keep your own
+    @ManyToOne(cascade=CascadeType.MERGE)
+//    @ManyToOne // <--- note that you have properties specified here - keep your own
     @JsonBackReference
     public Guest getGuest() {
         return guest;
