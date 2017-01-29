@@ -227,8 +227,12 @@ public class UserTest {
        assertNotNull(checkGuest1.getContactRequests());
        assertNotNull(checkGuest2.getContactRequests());
 
-        guest.deleteAll();
-        requestRepository.deleteAll();
+        requestRepository.delete(request);
+        guest.delete(currentGuest);
+        guest.delete(otherGuest);
+
+//        guest.deleteAll();
+//        requestRepository.deleteAll();
 
 
 

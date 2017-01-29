@@ -37,7 +37,8 @@ public class Guest {
 
     }
 
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="guest")
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.MERGE, orphanRemoval = true, mappedBy="guest")
+//    @OneToMany(cascade=CascadeType.ALL, mappedBy="guest")
     @JsonManagedReference
     public Set<ContactRequest> getContactRequests() {
         return contactRequests;
