@@ -102,13 +102,7 @@ public class PrescenceRestConroller {
         theEvent.getGuests().add(currentGuest);
         events.save(theEvent);
 
-//        listOfGuest.add(currentGuest);
-//        listOfEvents.add(theEvent);
-//        theEvent.setGuests(listOfGuest);
-//        currentGuest.setMyEvents(listOfEvents);
-
-//        events.save(theEvent);
-//        guests.save(currentGuest);
+//       
         return theEvent;
 
     }
