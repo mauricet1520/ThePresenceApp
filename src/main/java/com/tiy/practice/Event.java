@@ -2,7 +2,6 @@ package com.tiy.practice;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Set;
 
 /**
  * Created by crci1 on 1/27/2017.
@@ -14,7 +13,7 @@ public class Event {
 
     @Id
     @GeneratedValue
-    Integer event_id;
+    Integer id;
 
     @Column(nullable = false)
     String name;
@@ -33,13 +32,12 @@ public class Event {
     }
 
     public Event(Integer id, String name, String location, String address, java.sql.Timestamp time) {
-        this.event_id = id;
+        this.id = id;
         this.name = name;
         this.location = location;
         this.address = address;
         this.time = time;
     }
-
 
     public Timestamp getTime() {
         return time;
@@ -49,12 +47,12 @@ public class Event {
         this.time = time;
     }
 
-    public Integer getEvent_id() {
-        return event_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setEvent_id(Integer event_id) {
-        this.event_id = event_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

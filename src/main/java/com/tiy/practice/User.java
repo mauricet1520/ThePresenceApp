@@ -45,7 +45,6 @@ public class User {
 
     }
 
-
     public User(Integer id, String firstName, String lastName, String company, String position, String email, String password, String image, boolean showImage) {
         this.user_id = id;
         this.firstName = firstName;
@@ -57,7 +56,6 @@ public class User {
         this.image = image;
         this.showImage = showImage;
     }
-
 
     public boolean isShowImage() {
         return showImage;

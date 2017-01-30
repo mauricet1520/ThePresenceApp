@@ -123,8 +123,6 @@ public class UserTest {
             String content = new Scanner(new File("test.txt")).useDelimiter("\\Z").next();
             System.out.println("Content length: " + content.length());
             file.setImage(content);
-
-
         } catch (Exception exception) {
             System.out.println("Unable to read file with exception: " + exception.getMessage());
         }
@@ -237,7 +235,6 @@ public class UserTest {
 
 
     }
-
 
 
 
