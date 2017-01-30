@@ -40,6 +40,10 @@ public class Guest {
 //    @OneToMany(cascade=CascadeType.ALL, mappedBy="guest")
     @JsonManagedReference
     public Set<ContactRequest> getContactRequests() {
+        if (contactRequests == null) {
+            contactRequests = new HashSet<>();
+
+        }
         return contactRequests;
     }
 

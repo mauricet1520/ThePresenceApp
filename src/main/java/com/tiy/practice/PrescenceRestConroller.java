@@ -114,21 +114,22 @@ public class PrescenceRestConroller {
     }
 
     @RequestMapping(path = "/request_contact", method = RequestMethod.POST)
-    public void requestContact(@RequestBody EventCheckinRequest pretend) {
+    public void requestContact(@RequestBody RequestGuest pretend) {
 
-        Guest toUser = guests.findByEmail(pretend.getGuestEmail());
-        Guest fromUser = guests.findByFirstName(pretend.getEventName());
+        Guest fromUser = guests.findByEmail(pretend.getEmail());
+        Guest toUser = guests.findByFirstName(pretend.firstName());
 
         ContactRequest request = new ContactRequest();
+
 
         request.setRequestStatus("pending");
         request.setToUser(toUser.getFirstName());
         request.setFromUser(fromUser.getFirstName());
 
-        Set<ContactRequest> contactRequests = new HashSet<>();
-        contactRequests.add(request);
+//        Set<ContactRequest> contactRequests = new HashSet<>();
+//        contactRequests.add(request);
 
-        fromUser.setContactRequests(contactRequests);
+        fromUser.getContactRequests().add(request);
 
         for (ContactRequest request1 : fromUser.getContactRequests()) {
             System.out.println(request1.getFromUser());
@@ -142,6 +143,12 @@ public class PrescenceRestConroller {
 //            guests.save(fromUser);
 //            theRequest.save(request);
 
+    }
+
+    @RequestMapping(path = "/login_user.json", method = RequestMethod.POST)
+    public Guest login(@RequestBody RequestEmai request) {
+        Guest currentGuest = guests.findByEmail(request.getEmail());
+        return currentGuest;
     }
 
 //    @RequestMapping(path = "/check_in_event.json", method = RequestMethod.POST)
