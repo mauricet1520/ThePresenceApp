@@ -93,6 +93,8 @@ public class PrescenceRestConroller {
 
     }
 
+
+// works on localhost not heroku
     @RequestMapping(path = "/check_in_event.json", method = RequestMethod.POST)
     public MyEvent checkInEvent(@RequestBody EventCheckinRequest checkinRequest) {
 
@@ -101,8 +103,7 @@ public class PrescenceRestConroller {
 
         theEvent.getGuests().add(currentGuest);
         events.save(theEvent);
-
-//       
+//
         return theEvent;
 
     }
