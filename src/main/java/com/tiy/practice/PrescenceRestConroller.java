@@ -69,10 +69,15 @@ public class PrescenceRestConroller {
     }
 
     @RequestMapping(path = "/add_user.json", method = RequestMethod.POST)
-    public Guest add_user(@RequestBody Guest guest) {
+    public Guest add_user(@RequestBody EventCheckinRequest request) {
+        System.out.println("***************** add_user endpoint ***************");
 
-        guests.save(guest);
-        return guest;
+        Guest currentGuest = new Guest(request.getFirstName(),request.getLastName(),request.getCompany()
+        ,request.getPosition(), request.getEmail(), request.getPassword(), null, false);
+
+//
+        guests.save(currentGuest);
+        return currentGuest;
     }
 
     @RequestMapping(path = "/add_event.json", method = RequestMethod.POST)

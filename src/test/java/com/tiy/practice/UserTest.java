@@ -45,28 +45,51 @@ public class UserTest {
     @Test
 
     public void testAddUser() throws Exception {
-        Iterable<Guest> allGuest = guest.findAll();
-        int size = 0;
-        for (Guest guest : allGuest) {
-            size++;
-        }
 
         Guest testGuest = new Guest("Maurice", "Thomas", "Iron Yard", "student", "mauricet1520@gmail.com", "password", null, false);
-        guest.save(testGuest);
 
+        Guest currentGuest = new Guest();
+        currentGuest.setFirstName("Gayle");
+        currentGuest.setCompany("Code Help");
+        currentGuest.setLastName("Sanders");
+        currentGuest.setPosition("manager");
+        currentGuest.setPassword("password");
+
+        // save the guest and check it
+        guest.save(currentGuest);
+        guest.save(testGuest);
+        assertNotNull(currentGuest.getGuestId());
         assertNotNull(testGuest.getGuestId());
 
+        Guest retrievedGuest = guest.findOne(currentGuest.getGuestId());
+        assertEquals(retrievedGuest.getFirstName(), currentGuest.getFirstName());
+        assertNotNull(retrievedGuest.getGuestId());
+
+        guest.delete(currentGuest);
         guest.delete(testGuest);
 
-        System.out.println("user" + testGuest.getGuestId());
-
-        allGuest = guest.findAll();
-        int deleteSize = 0;
-        for (Guest guest : allGuest) {
-            deleteSize++;
-        }
-
-        assertEquals(size, deleteSize);
+//        Iterable<Guest> allGuest = guest.findAll();
+//        int size = 0;
+//        for (Guest guest : allGuest) {
+//            size++;
+//        }
+//
+//
+//        guest.save(testGuest);
+//
+//        assertNotNull(testGuest.getGuestId());
+//
+//        guest.delete(testGuest);
+//
+//        System.out.println("user" + testGuest.getGuestId());
+//
+//        allGuest = guest.findAll();
+//        int deleteSize = 0;
+//        for (Guest guest : allGuest) {
+//            deleteSize++;
+//        }
+//
+//        assertEquals(size, deleteSize);
     }
 
     @Autowired

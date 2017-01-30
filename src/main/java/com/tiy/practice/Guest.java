@@ -147,7 +147,6 @@ public class Guest {
     public Guest(String firstName, String lastName, String company, String position, String email, String password, String image, boolean showImage) {
         this.guestId = guestId;
         this.firstName = firstName;
-        this.myEvents = myEvents;
         this.lastName = lastName;
         this.company = company;
         this.position = position;
