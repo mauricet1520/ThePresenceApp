@@ -36,10 +36,10 @@ public class PrescenceRestConroller {
         List<Guest> userList = new ArrayList<>();
 //        guests.deleteAll();
 
-        Guest theGuest = new Guest("Maurice", "Thomas", "Iron Yard", "student", "mauricet1520@gmail.com", "password", null, false);
-        Guest secondGuest = new Guest("Roger", "Craig", "IBM", "manager", "music@gmail.com", "password", null, false);
-        guests.save(theGuest);
-        guests.save(secondGuest);
+//        Guest theGuest = new Guest("Maurice", "Thomas", "Iron Yard", "student", "mauricet1520@gmail.com", "password", null, false);
+//        Guest secondGuest = new Guest("Roger", "Craig", "IBM", "manager", "music@gmail.com", "password", null, false);
+//        guests.save(theGuest);
+//        guests.save(secondGuest);
 
         Iterable<Guest> allUsers = guests.findAll();
         for (Guest guest : allUsers) {
@@ -67,13 +67,13 @@ public class PrescenceRestConroller {
         List<MyEvent> eventList = new ArrayList<>();
 //        events.deleteAll();
 //
-        MyEvent theEvent = new MyEvent("Iron Pints", "Iron Yard", "Atlanta", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY), 28, 1, 5)));
-        MyEvent secondEvent = new MyEvent("Java Crash Course", "Iron Yard", "Atlanta", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY), 29, 8, 5)));
-        MyEvent thirdEvent = new MyEvent("PTA meeting", "Dacula High School", "Dacula", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.MARCH), 20, 7, 5)));
-//
-        events.save(theEvent);
-        events.save(secondEvent);
-        events.save(thirdEvent);
+//        MyEvent theEvent = new MyEvent("Iron Pints", "Iron Yard", "Atlanta", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY), 28, 1, 5)));
+//        MyEvent secondEvent = new MyEvent("Java Crash Course", "Iron Yard", "Atlanta", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY), 29, 8, 5)));
+//        MyEvent thirdEvent = new MyEvent("PTA meeting", "Dacula High School", "Dacula", java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.MARCH), 20, 7, 5)));
+////
+//        events.save(theEvent);
+//        events.save(secondEvent);
+//        events.save(thirdEvent);
 
 //        eventList.add(theEvent);
 //        eventList.add(secondEvent);
