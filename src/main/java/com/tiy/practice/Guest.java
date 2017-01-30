@@ -19,16 +19,15 @@ public class Guest {
     private Set<ContactRequest> contactRequests;
 
 
-
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name="guest_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "guest_id")
     public Long getGuestId() {
         return guestId;
     }
 
 
-    @Column(name="guest_name")
+    @Column(name = "guest_name")
     public String getFirstName() {
         return firstName;
     }
@@ -37,7 +36,7 @@ public class Guest {
 
     }
 
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.MERGE, orphanRemoval = true, mappedBy="guest")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true, mappedBy = "guest")
 //    @OneToMany(cascade=CascadeType.ALL, mappedBy="guest")
     @JsonManagedReference
     public Set<ContactRequest> getContactRequests() {
@@ -48,7 +47,7 @@ public class Guest {
         this.contactRequests = contactRequests;
     }
 
-    @ManyToMany(cascade=CascadeType.ALL, mappedBy="guests")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "guests")
     @JsonBackReference
     public Set<MyEvent> getMyEvents() {
         return myEvents;

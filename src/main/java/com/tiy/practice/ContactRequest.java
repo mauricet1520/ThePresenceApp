@@ -18,8 +18,7 @@ public class ContactRequest {
     private java.sql.Timestamp time;
     private Guest guest;
 
-
-    @ManyToOne(cascade=CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
 //    @ManyToOne // <--- note that you have properties specified here - keep your own
     @JsonBackReference
     public Guest getGuest() {
@@ -31,8 +30,8 @@ public class ContactRequest {
     }
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name="request_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "request_id")
 
     public Long getMyRequestId() {
         return myRequestId;
@@ -43,7 +42,7 @@ public class ContactRequest {
     }
 
 
-    @Column(name="request_name")
+    @Column(name = "target_user")
     public String getToUser() {
         return toUser;
     }
@@ -52,7 +51,7 @@ public class ContactRequest {
         this.toUser = toUser;
     }
 
-    @Column(name="request_user")
+    @Column(name = "from_user")
     public String getFromUser() {
         return fromUser;
     }
@@ -61,7 +60,7 @@ public class ContactRequest {
         this.fromUser = fromUser;
     }
 
-    @Column(name="request_status")
+    @Column(name = "request_status")
     public String getRequestStatus() {
         return requestStatus;
     }
@@ -75,7 +74,7 @@ public class ContactRequest {
         return time;
     }
 
-    @Column(name="request_time")
+    @Column(name = "request_time")
     public void setTime(Timestamp time) {
         this.time = time;
     }

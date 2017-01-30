@@ -16,20 +16,20 @@ public class MyEvent {
     private Set<Guest> guests;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name="event_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "event_id")
     public Long getMyEventId() {
         return myEventId;
     }
 
-    @Column(name="event_name")
+    @Column(name = "event_name")
     public String getEventName() {
         return eventName;
     }
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JsonManagedReference
-    @JoinTable(name="guest_event ", joinColumns=@JoinColumn(name="event_id"), inverseJoinColumns=@JoinColumn(name="guest_id"))
+    @JoinTable(name = "guest_event ", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "guest_id"))
     public Set<Guest> getGuests() {
         return guests;
     }

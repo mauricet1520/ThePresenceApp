@@ -5,12 +5,13 @@ package com.tiy.practice;
  */
 public class EventPretend {
 
-
     public EventPretend() {
     }
 
-    public EventPretend(String email, String eventName) {
+    public EventPretend(String email, String eventName, String name, String lastName) {
         this.email = email;
+        this.firstName = name;
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -31,6 +32,25 @@ public class EventPretend {
 
     String email;
     String eventName;
+    String firstName;
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    String lastName;
 
 
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 }
