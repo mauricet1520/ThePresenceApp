@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class PresenceControllor {
     @Autowired
-    UserRepository users;
+    GuestRepository users;
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpSession session) throws Exception {
@@ -31,7 +31,6 @@ public class PresenceControllor {
         if (savedUser != null) {
             model.addAttribute("user", session.getAttribute("user"));
         }
-
 
         return "home";
     }

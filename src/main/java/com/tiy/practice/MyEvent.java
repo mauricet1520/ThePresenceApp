@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -27,10 +28,13 @@ public class MyEvent {
         return eventName;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonManagedReference
     @JoinTable(name = "guest_event ", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "guest_id"))
     public Set<Guest> getGuests() {
+        if (guests == null) {
+            guests = new HashSet<Guest>();
+        }
         return guests;
     }
 
@@ -75,8 +79,7 @@ public class MyEvent {
         this.eventName = eventName;
     }
 
-    MyEvent() {
-
+    public MyEvent() {
     }
 
     public void setGuests(Set<Guest> guests) {
@@ -88,6 +91,5 @@ public class MyEvent {
         this.location = location;
         this.address = address;
         this.time = time;
-
     }
 }

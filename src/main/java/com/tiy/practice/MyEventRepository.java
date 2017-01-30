@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by crci1 on 1/27/2017.
  */
-public interface EventRepository extends CrudRepository<MyEvent, Long> {
+public interface MyEventRepository extends CrudRepository<MyEvent, Long> {
 
     MyEvent findByEventName(String eventName);
     List<MyEvent> findByLocation(String location);

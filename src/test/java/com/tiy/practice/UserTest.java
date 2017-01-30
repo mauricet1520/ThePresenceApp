@@ -2,6 +2,7 @@ package com.tiy.practice;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,34 +37,32 @@ public class UserTest {
 
 
     @Autowired
-    UserRepository guest;
+    GuestRepository guest;
 
     @Autowired
     RequestRepository requestRepository;
 
-
     @Test
 
     public void testAddUser() throws Exception {
-        Iterable<Guest> allUsers = guest.findAll();
+        Iterable<Guest> allGuest = guest.findAll();
         int size = 0;
-        for (Guest guest : allUsers) {
+        for (Guest guest : allGuest) {
             size++;
         }
 
-        Guest testUser = new Guest("Maurice", "Thomas", "Iron Yard", "student", "mauricet1520@gmail.com", "password", null, false);
-        guest.save(testUser);
+        Guest testGuest = new Guest("Maurice", "Thomas", "Iron Yard", "student", "mauricet1520@gmail.com", "password", null, false);
+        guest.save(testGuest);
 
-        assertNotNull(testUser.getGuestId());
+        assertNotNull(testGuest.getGuestId());
 
-        guest.delete(testUser);
+        guest.delete(testGuest);
 
-        System.out.println("user" + testUser.getGuestId());
+        System.out.println("user" + testGuest.getGuestId());
 
-
-        allUsers = guest.findAll();
+        allGuest = guest.findAll();
         int deleteSize = 0;
-        for (Guest guest : allUsers) {
+        for (Guest guest : allGuest) {
             deleteSize++;
         }
 
@@ -71,7 +70,7 @@ public class UserTest {
     }
 
     @Autowired
-    EventRepository event;
+    MyEventRepository event;
 
     @Test
     public void testAddEvent() throws Exception {
@@ -82,14 +81,13 @@ public class UserTest {
             size++;
         }
 
-        System.out.println("the size is "+size);
+        System.out.println("the size is " + size);
 //        Event testEvent = new Event(null, "The Iron yard", "Atlanta", "downtown", java.sql.Timestamp.valueOf(LocalDateTime.now()));
 //        event.save(testEvent);
 //        assertNotNull(testEvent.getEvent_id());
 
-
         MyEvent testSecondEvent = new MyEvent("The UnderGround", "Atlanta", "downtown",
-                java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY),20,12,5)));
+                java.sql.Timestamp.valueOf(LocalDateTime.of(2017, Month.from(Month.JANUARY), 20, 12, 5)));
         event.save(testSecondEvent);
         System.out.println(testSecondEvent.getMyEventId());
         assertNotNull(testSecondEvent.getMyEventId());
@@ -99,11 +97,9 @@ public class UserTest {
         for (MyEvent event : allTheEvents) {
             newSize++;
         }
-        System.out.println("the newsize is "+newSize);
+        System.out.println("the newsize is " + newSize);
 
-
-        assertEquals(size+1, newSize);
-
+        assertEquals(size + 1, newSize);
 
         MyEvent timeEvent = testSecondEvent;
 
@@ -112,11 +108,10 @@ public class UserTest {
         assertEquals(timeEvent.getTime(), testSecondEvent.getTime());
         event.delete(testSecondEvent);
 
-
     }
 
     @Test
-    public void testImage(){
+    public void testImage() {
         Guest file = new Guest();
         file.setImage("unit-test-file.jpg");
         try {
@@ -129,17 +124,41 @@ public class UserTest {
     }
 
     @Test
-    public void testTablesJoined(){
-        event.deleteAll();
-        guest.deleteAll();
+    @Ignore
+    // need to test the uniqueness of email later
+    public void testDuplicateEmail() {
+        Guest currentGuest = new Guest();
+        currentGuest.setEmail("dup-test-unit-test@gmail.com");
+        guest.save(currentGuest);
+        Guest duplicateGuest = new Guest();
+        duplicateGuest.setEmail("dup-test-unit-test@gmail.com");
+        guest.save(duplicateGuest);
+    }
 
-        Set<Guest> myGuests = new HashSet<>();
-        Set<MyEvent> myEvents = new HashSet<>();
+    @Test
+    public void testRetrieveGuestByEmail() {
+        Guest currentGuest = new Guest();
+        currentGuest.setFirstName("Maurice");
+        currentGuest.setCompany("Iron Yard");
+        currentGuest.setLastName("Thomas");
+        currentGuest.setPosition("student");
+        currentGuest.setPassword("password");
+        currentGuest.setEmail("unit-test-user@gmail.com");
 
-        MyEvent secondEvent;
+        guest.save(currentGuest);
+
+        Guest retrievedGuest = guest.findByEmail(currentGuest.getEmail());
+        assertNotNull(retrievedGuest);
+        assertEquals(currentGuest.getGuestId(), retrievedGuest.getGuestId());
+
+        guest.delete(currentGuest);
+    }
+
+    @Test
+    public void testCheckInEvent() {
+        // Create data for this test
         MyEvent currentEvent = new MyEvent();
-        Guest currentGuest  = new Guest();
-        Guest theGuest;
+        Guest currentGuest = new Guest();
 
         currentEvent.setEventName("The Iron Yard");
         currentEvent.setLocation("Atl");
@@ -151,31 +170,54 @@ public class UserTest {
         currentGuest.setPosition("student");
         currentGuest.setPassword("password");
 
-        myEvents.add(currentEvent);
-        myGuests.add(currentGuest);
+        // save the guest and check it
+        guest.save(currentGuest);
+        assertNotNull(currentGuest.getGuestId());
+        Guest retrievedGuest = guest.findOne(currentGuest.getGuestId());
+        assertEquals(retrievedGuest.getFirstName(), currentGuest.getFirstName());
+        assertNotNull(retrievedGuest.getGuestId());
 
-        currentEvent.setGuests(myGuests);
-        currentGuest.setMyEvents(myEvents);
+        // add the saved guest to the event
+        currentEvent.getGuests().add(currentGuest);
+        // save the event with the added guest and check it
+        currentEvent = event.save(currentEvent);
+        assertNotNull(currentEvent.getMyEventId());
+        MyEvent retrievedEvent = event.findOne(currentEvent.getMyEventId());
+        assertNotNull(retrievedEvent.getMyEventId());
+        assertEquals(retrievedEvent.getEventName(), currentEvent.getEventName());
+        assertNotNull(retrievedEvent.getGuests());
+        assertEquals(1, retrievedEvent.getGuests().size());
+        // check that the guest from the event is the same
+        // as the guest we created locally
+        Guest guestFromEventInDB = retrievedEvent.getGuests().iterator().next();
+        assertNotNull(guestFromEventInDB);
+        assertEquals(currentGuest.getGuestId(), guestFromEventInDB.getGuestId());
 
-        theGuest = guest.save(currentGuest);
+        // test that the guest has the event (i.e. test that the relationship
+        // is bidirectional)
+        retrievedGuest = guest.findOne(currentGuest.getGuestId());
+        assertNotNull(retrievedGuest.getMyEvents());
+        assertEquals(1, retrievedGuest.getMyEvents().size());
+        MyEvent eventFromGuestInDB = retrievedGuest.getMyEvents().iterator().next();
+        assertNotNull(eventFromGuestInDB.getMyEventId());
+        assertEquals(currentEvent.getMyEventId(), eventFromGuestInDB.getMyEventId());
 
-        assertEquals(theGuest.getFirstName(), currentGuest.getFirstName());
-        assertNotNull(theGuest.getGuestId());
+        // now let's test adding a second guest to the same event
+        Guest secondGuest = new Guest();
+        currentGuest.setFirstName("Maurice");
+        currentGuest.setCompany("Iron Yard");
+        currentGuest.setLastName("Thomas");
+        currentGuest.setPosition("student");
+        currentGuest.setPassword("password");
+        guest.save(secondGuest);
 
-        secondEvent = event.save(currentEvent);
+        currentEvent.getGuests().add(secondGuest);
+        event.save(currentEvent);
+        retrievedEvent = event.findOne(currentEvent.getMyEventId());
+        assertEquals(2, retrievedEvent.getGuests().size());
 
-        assertNotNull(secondEvent.getMyEventId());
-        assertEquals(secondEvent.getEventName(), currentEvent.getEventName());
-
-        assertEquals(theGuest.getMyEvents().size(), currentGuest.getMyEvents().size());
-
-        assertEquals(secondEvent.getGuests().size(), currentEvent.getGuests().size());
-
-        event.deleteAll();
-        guest.deleteAll();
-
-//        event.delete(secondEvent.getMyEventId());
-//        guest.delete(theGuest.getGuestId());
+        event.delete(currentEvent);
+        guest.delete(currentGuest);
 
     }
 
@@ -215,15 +257,15 @@ public class UserTest {
         otherGuest.setContactRequests(contactRequests);
 
         checkRequest = requestRepository.save(request);
-        checkGuest1= guest.save(currentGuest);
-       checkGuest2 =  guest.save(otherGuest);
+        checkGuest1 = guest.save(currentGuest);
+        checkGuest2 = guest.save(otherGuest);
 
-       assertNotNull(checkGuest1.getGuestId());
-       assertNotNull(checkGuest2.getGuestId());
-       assertNotNull(checkRequest.getMyRequestId());
+        assertNotNull(checkGuest1.getGuestId());
+        assertNotNull(checkGuest2.getGuestId());
+        assertNotNull(checkRequest.getMyRequestId());
 
-       assertNotNull(checkGuest1.getContactRequests());
-       assertNotNull(checkGuest2.getContactRequests());
+        assertNotNull(checkGuest1.getContactRequests());
+        assertNotNull(checkGuest2.getContactRequests());
 
         requestRepository.delete(request);
         guest.delete(currentGuest);
@@ -232,10 +274,6 @@ public class UserTest {
 //        guest.deleteAll();
 //        requestRepository.deleteAll();
 
-
-
     }
 
-
-
-    }
+}

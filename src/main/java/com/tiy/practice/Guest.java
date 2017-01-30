@@ -2,6 +2,7 @@ package com.tiy.practice;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -26,7 +27,6 @@ public class Guest {
         return guestId;
     }
 
-
     @Column(name = "guest_name")
     public String getFirstName() {
         return firstName;
@@ -47,7 +47,7 @@ public class Guest {
         this.contactRequests = contactRequests;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "guests")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy = "guests")
     @JsonBackReference
     public Set<MyEvent> getMyEvents() {
         return myEvents;
@@ -81,6 +81,7 @@ public class Guest {
     String password;
 
     @Column(nullable = true)
+    @Type(type = "text")
     @Lob
     private String image;
 
