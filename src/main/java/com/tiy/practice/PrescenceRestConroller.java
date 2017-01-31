@@ -65,6 +65,38 @@ public class PrescenceRestConroller {
         return requests;
     }
 
+    @RequestMapping(path = "/reject_status_request.json", method = RequestMethod.POST)
+    public StatusMessage rejectRequestStatus(@RequestBody RequestContactByEmail requestContactByEmail){
+        Guest requester = guests.findByEmail(requestContactByEmail.getRequesterEmail());
+        Guest requestee = guests.findByEmail(requestContactByEmail.getRequesterEmail());
+        List<ContactRequest> requests = new ArrayList<ContactRequest>();
+        for (ContactRequest request : requestee.getContactRequests()) {
+
+            if (request.getRequesterEmailAddress().equals(requester.getEmail())){
+                request.setRequestStatus("Rejected");
+                theRequest.save(request);
+            }
+        }
+
+        return new StatusMessage(true, null);
+    }
+
+    @RequestMapping(path = "/accept_status_request.json", method = RequestMethod.POST)
+    public StatusMessage acceptRequestStatus(@RequestBody RequestContactByEmail requestContactByEmail){
+        Guest requester = guests.findByEmail(requestContactByEmail.getRequesterEmail());
+        Guest requestee = guests.findByEmail(requestContactByEmail.getRequesterEmail());
+        List<ContactRequest> requests = new ArrayList<ContactRequest>();
+        for (ContactRequest request : requestee.getContactRequests()) {
+
+            if (request.getRequesterEmailAddress().equals(requester.getEmail())){
+                request.setRequestStatus("Accepted");
+                theRequest.save(request);
+            }
+        }
+
+        return new StatusMessage(true, null);
+    }
+
     @RequestMapping(path = "/get_user.json", method = RequestMethod.GET)
     public List<Guest> get_user() {
         List<Guest> userList = new ArrayList<>();
