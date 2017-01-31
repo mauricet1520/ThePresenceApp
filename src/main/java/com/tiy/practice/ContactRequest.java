@@ -1,7 +1,6 @@
 package com.tiy.practice;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,8 +11,8 @@ import java.sql.Timestamp;
 @Entity
 public class ContactRequest {
     private Long myRequestId;
-    private String toUser;
-    private String fromUser;
+    private String requesteeEmailAddress;
+    private String requesterEmailAddress;
     private String requestStatus;
     private java.sql.Timestamp time;
     private Guest guest;
@@ -41,22 +40,22 @@ public class ContactRequest {
         this.myRequestId = myRequestId;
     }
 
-    @Column(name = "target_user")
-    public String getToUser() {
-        return toUser;
+    @Column(name = "requestee_email_address")
+    public String getRequesteeEmailAddress() {
+        return requesteeEmailAddress;
     }
 
-    public void setToUser(String toUser) {
-        this.toUser = toUser;
+    public void setRequesteeEmailAddress(String requesteeEmailAddress) {
+        this.requesteeEmailAddress = requesteeEmailAddress;
     }
 
-    @Column(name = "from_user")
-    public String getFromUser() {
-        return fromUser;
+    @Column(name = "requester_email_address")
+    public String getRequesterEmailAddress() {
+        return requesterEmailAddress;
     }
 
-    public void setFromUser(String fromUser) {
-        this.fromUser = fromUser;
+    public void setRequesterEmailAddress(String requesterEmailAddress) {
+        this.requesterEmailAddress = requesterEmailAddress;
     }
 
     @Column(name = "request_status")
@@ -77,9 +76,9 @@ public class ContactRequest {
         this.time = time;
     }
 
-    public ContactRequest(String toUser, String fromUser, String requestStatus, Timestamp time) {
-        this.toUser = toUser;
-        this.fromUser = fromUser;
+    public ContactRequest(String requesteeEmailAddress, String requesterEmailAddress, String requestStatus, Timestamp time) {
+        this.requesteeEmailAddress = requesteeEmailAddress;
+        this.requesterEmailAddress = requesterEmailAddress;
         this.requestStatus = requestStatus;
         this.time = time;
     }

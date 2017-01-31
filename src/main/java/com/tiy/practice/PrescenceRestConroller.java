@@ -115,7 +115,7 @@ public class PrescenceRestConroller {
     @RequestMapping(path = "/request_contact", method = RequestMethod.POST)
     public StatusMessage requestContact(@RequestBody RequestContactByEmail requestContactByEmail) {
 
-        return new StatusMessage(StatusMessage.SUCCESS, null);
+        return new StatusMessage(true, null);
     }
 
     @RequestMapping(path = "/request_contact_old", method = RequestMethod.POST)
@@ -127,23 +127,23 @@ public class PrescenceRestConroller {
         ContactRequest request = new ContactRequest();
 
         request.setRequestStatus("pending");
-        request.setToUser(toUser.getFirstName());
-        request.setFromUser(fromUser.getFirstName());
+        request.setRequesteeEmailAddress(toUser.getFirstName());
+        request.setRequesterEmailAddress(fromUser.getFirstName());
 
 //        Set<ContactRequest> contactRequests = new HashSet<>();
 //        contactRequests.add(request);
 
-        toUser.getContactRequests().add(request);
+//        toUser.getContactRequests().add(request);
         theRequest.save(request);
         guests.save(fromUser);
         guests.save(toUser);
-        ContactRequest statusRequest = theRequest.findByFromUser(fromUser.getFirstName());
+        ContactRequest statusRequest = theRequest.findByRequesterEmailAddress(fromUser.getFirstName());
 
-        for (ContactRequest request1 : toUser.getContactRequests()) {
-            System.out.println(request1.getFromUser());
-            System.out.println(request1.getToUser());
-
-        }
+//        for (ContactRequest request1 : toUser.getContactRequests()) {
+//            System.out.println(request1.getRequesterEmailAddress());
+//            System.out.println(request1.getRequesteeEmailAddress());
+//
+//        }
         String status = null;
 
         if(statusRequest != null){

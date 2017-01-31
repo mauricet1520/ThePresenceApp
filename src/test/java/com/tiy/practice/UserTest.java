@@ -257,17 +257,19 @@ public class UserTest {
         currentGuest.setLastName("Thomas");
         currentGuest.setPosition("student");
         currentGuest.setPassword("password");
+        currentGuest.setEmail("maurice@gmail.com");
 
         otherGuest.setFirstName("Roger");
         otherGuest.setCompany("Iron Yard");
         otherGuest.setLastName("Curtis");
         otherGuest.setPosition("student");
         otherGuest.setPassword("password");
+        currentGuest.setEmail("roger@gmail.com");
 
         Set<ContactRequest> contactRequests = new HashSet<>();
 
-        request.setFromUser(currentGuest.getFirstName());
-        request.setToUser(currentGuest.getFirstName());
+        request.setRequesterEmailAddress(currentGuest.getEmail());
+        request.setRequesteeEmailAddress(otherGuest.getEmail());
         request.setRequestStatus("pending");
 
         contactRequests.add(request);
@@ -285,6 +287,11 @@ public class UserTest {
 
         assertNotNull(checkGuest1.getContactRequests());
         assertNotNull(checkGuest2.getContactRequests());
+
+        assertEquals(1, checkGuest1.getContactRequests().size());
+        assertEquals(1, checkGuest2.getContactRequests().size());
+        assertEquals(checkGuest1.getEmail(), checkGuest1.getContactRequests().iterator().next().getRequesterEmailAddress());
+        assertEquals(checkGuest2.getEmail(), checkGuest1.getContactRequests().iterator().next().getRequesteeEmailAddress());
 
         requestRepository.delete(request);
         guest.delete(currentGuest);

@@ -4,10 +4,7 @@ package com.tiy.practice;
  * Created by crci1 on 1/31/2017.
  */
 public class StatusMessage {
-    public static final String SUCCESS = "SUCCESS";
-    public static final String ERROR = "ERROR";
-    // Two possible values: SUCCESS and ERROR
-    private String status;
+    private boolean success = true;
     // this will only have a value if there is an error
     // it will be null otherwise
     private String errorMessage;
@@ -15,17 +12,17 @@ public class StatusMessage {
     public StatusMessage() {
     }
 
-    public StatusMessage(String status, String errorMessage) {
-        this.status = status;
+    public StatusMessage(boolean success, String errorMessage) {
+        this.success = success;
         this.errorMessage = errorMessage;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public String getErrorMessage() {
