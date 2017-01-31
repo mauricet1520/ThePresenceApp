@@ -246,15 +246,11 @@ public class UserTest {
 
     @Test
     public void testOneToMany() {
-        guest.deleteAll();
 
         Guest currentGuest = new Guest();
         Guest otherGuest = new Guest();
 
-        Guest checkGuest1;
-        Guest checkGuest2;
         ContactRequest request = new ContactRequest();
-        ContactRequest checkRequest;
 
         currentGuest.setFirstName("Maurice");
         currentGuest.setCompany("Iron Yard");
@@ -279,9 +275,9 @@ public class UserTest {
         currentGuest.setContactRequests(contactRequests);
         otherGuest.setContactRequests(contactRequests);
 
-        checkRequest = requestRepository.save(request);
-        checkGuest1 = guest.save(currentGuest);
-        checkGuest2 = guest.save(otherGuest);
+        ContactRequest checkRequest = requestRepository.save(request);
+        Guest checkGuest1 = guest.save(currentGuest);
+        Guest checkGuest2 = guest.save(otherGuest);
 
         assertNotNull(checkGuest1.getGuestId());
         assertNotNull(checkGuest2.getGuestId());
@@ -294,10 +290,8 @@ public class UserTest {
         guest.delete(currentGuest);
         guest.delete(otherGuest);
 
-//        guest.deleteAll();
-//        requestRepository.deleteAll();
-    }
 
+    }
 
 
 }

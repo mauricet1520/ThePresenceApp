@@ -41,7 +41,6 @@ public class ContactRequest {
         this.myRequestId = myRequestId;
     }
 
-
     @Column(name = "target_user")
     public String getToUser() {
         return toUser;
@@ -64,7 +63,6 @@ public class ContactRequest {
     public String getRequestStatus() {
         return requestStatus;
     }
-
 
     public void setRequestStatus(String requestStatus) {
         this.requestStatus = requestStatus;

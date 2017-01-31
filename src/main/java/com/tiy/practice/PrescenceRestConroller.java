@@ -70,20 +70,20 @@ public class PrescenceRestConroller {
 
     @RequestMapping(path = "/add_user.json", method = RequestMethod.POST)
     public Guest add_user(@RequestBody EventCheckinRequest request) {
-        System.out.println("***************** add_user endpoint ***************");
 
-        Guest currentGuest = new Guest(request.getFirstName(),request.getLastName(),request.getCompany()
-        ,request.getPosition(), request.getEmail(), request.getPassword(), null, false);
+        Guest currentGuest = new Guest(request.getFirstName(), request.getLastName(), request.getCompany()
+                ,request.getPosition(), request.getEmail(), request.getPassword(), null, false);
 
-//
         guests.save(currentGuest);
         return currentGuest;
     }
 
     @RequestMapping(path = "/add_event.json", method = RequestMethod.POST)
-    public Event add_event(@RequestBody Event theEvent) {
+    public MyEvent add_event(@RequestBody Event theEvent) {
+        MyEvent currentEvent = new MyEvent(theEvent.getName(), theEvent.getLocation(), theEvent.getAddress(), theEvent.getTime());
+        events.save(currentEvent);
 
-        return theEvent;
+        return currentEvent;
     }
 
     @RequestMapping(path = "/get_events.json", method = RequestMethod.GET)
@@ -98,8 +98,7 @@ public class PrescenceRestConroller {
 
     }
 
-
-// works on localhost not heroku
+    // works on localhost not heroku
     @RequestMapping(path = "/check_in_event.json", method = RequestMethod.POST)
     public MyEvent checkInEvent(@RequestBody EventCheckinRequest checkinRequest) {
 
@@ -114,13 +113,18 @@ public class PrescenceRestConroller {
     }
 
     @RequestMapping(path = "/request_contact", method = RequestMethod.POST)
-    public void requestContact(@RequestBody RequestGuest pretend) {
+    public StatusMessage requestContact(@RequestBody RequestContactByEmail requestContactByEmail) {
 
-        Guest fromUser = guests.findByEmail(pretend.getEmail());
-        Guest toUser = guests.findByFirstName(pretend.firstName());
+        return new StatusMessage(StatusMessage.SUCCESS, null);
+    }
+
+    @RequestMapping(path = "/request_contact_old", method = RequestMethod.POST)
+    public String requestContactOld(@RequestBody RequestContactByEmail requestContactByEmail) {
+
+        Guest fromUser = guests.findByEmail(requestContactByEmail.getRequesterEmail());
+        Guest toUser = guests.findByEmail(requestContactByEmail.getRequesteeEmail());
 
         ContactRequest request = new ContactRequest();
-
 
         request.setRequestStatus("pending");
         request.setToUser(toUser.getFirstName());
@@ -129,24 +133,36 @@ public class PrescenceRestConroller {
 //        Set<ContactRequest> contactRequests = new HashSet<>();
 //        contactRequests.add(request);
 
-        fromUser.getContactRequests().add(request);
+        toUser.getContactRequests().add(request);
+        theRequest.save(request);
+        guests.save(fromUser);
+        guests.save(toUser);
+        ContactRequest statusRequest = theRequest.findByFromUser(fromUser.getFirstName());
 
-        for (ContactRequest request1 : fromUser.getContactRequests()) {
+        for (ContactRequest request1 : toUser.getContactRequests()) {
             System.out.println(request1.getFromUser());
             System.out.println(request1.getToUser());
 
         }
+        String status = null;
+
+        if(statusRequest != null){
+            status = "success";
+        }else {
+            status = "error";
+        }
+
+        return status;
 
 //            System.out.println(String.valueOf(fromUser.getContactRequests()));
 
 //            guests.save(toUser);
 //            guests.save(fromUser);
 //            theRequest.save(request);
-
     }
 
     @RequestMapping(path = "/login_user.json", method = RequestMethod.POST)
-    public Guest login(@RequestBody RequestEmai request) {
+    public Guest login(@RequestBody RequestContactByEmail request) {
         Guest currentGuest = guests.findByEmail(request.getEmail());
         return currentGuest;
     }
