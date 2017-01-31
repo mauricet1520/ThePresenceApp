@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by crci1 on 1/25/2017.
@@ -57,6 +54,17 @@ public class PrescenceRestConroller {
         }
     }
 
+    @RequestMapping(path = "/get_all_requests.json", method = RequestMethod.GET)
+    public List<ContactRequest> getAllRequests(String guestEmailAddress) {
+        Guest guest = guests.findByEmail(guestEmailAddress);
+        List<ContactRequest> requests = new ArrayList<ContactRequest>();
+        for (ContactRequest request : guest.getContactRequests()) {
+            requests.add(request);
+        }
+
+        return requests;
+    }
+
     @RequestMapping(path = "/get_user.json", method = RequestMethod.GET)
     public List<Guest> get_user() {
         List<Guest> userList = new ArrayList<>();
@@ -80,7 +88,7 @@ public class PrescenceRestConroller {
 
     @RequestMapping(path = "/add_event.json", method = RequestMethod.POST)
     public MyEvent add_event(@RequestBody Event theEvent) {
-        MyEvent currentEvent = new MyEvent(theEvent.getName(), theEvent.getLocation(), theEvent.getAddress(), theEvent.getTime());
+        MyEvent currentEvent = new MyEvent(theEvent.getName(), theEvent.getLocation(), theEvent.getAddress(), null);
         events.save(currentEvent);
 
         return currentEvent;
@@ -114,6 +122,25 @@ public class PrescenceRestConroller {
 
     @RequestMapping(path = "/request_contact", method = RequestMethod.POST)
     public StatusMessage requestContact(@RequestBody RequestContactByEmail requestContactByEmail) {
+
+        Guest requester = guests.findByEmail(requestContactByEmail.getRequesterEmail());
+        Guest requestee = guests.findByEmail(requestContactByEmail.getRequesteeEmail());
+
+        ContactRequest request = new ContactRequest();
+        request.setRequesterEmailAddress(requester.getEmail());
+        request.setRequesteeEmailAddress(requestee.getEmail());
+        request.setRequestStatus("pending");
+        request.setGuest(requester);
+        theRequest.save(request);
+
+        Iterator<ContactRequest> requestsIterator = theRequest.findAll().iterator();
+        while (requestsIterator.hasNext()) {
+            ContactRequest contactRequest = requestsIterator.next();
+            System.out.println("===========================");
+            System.out.println("Contact Requester = " + contactRequest.getRequesterEmailAddress());
+            System.out.println("Contact Requestee = " + contactRequest.getRequesteeEmailAddress());
+            System.out.println("===========================");
+        }
 
         return new StatusMessage(true, null);
     }

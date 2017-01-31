@@ -245,7 +245,7 @@ public class UserTest {
     }
 
     @Test
-    public void testOneToMany() {
+    public void testContactRequest() {
 
         Guest currentGuest = new Guest();
         Guest otherGuest = new Guest();
@@ -257,29 +257,27 @@ public class UserTest {
         currentGuest.setLastName("Thomas");
         currentGuest.setPosition("student");
         currentGuest.setPassword("password");
-        currentGuest.setEmail("maurice@gmail.com");
+        currentGuest.setEmail("unittest1@tiy.com");
 
         otherGuest.setFirstName("Roger");
         otherGuest.setCompany("Iron Yard");
         otherGuest.setLastName("Curtis");
         otherGuest.setPosition("student");
         otherGuest.setPassword("password");
-        currentGuest.setEmail("roger@gmail.com");
+        otherGuest.setEmail("unittest2@tiy.com");
 
-        Set<ContactRequest> contactRequests = new HashSet<>();
+        guest.save(currentGuest);
+        guest.save(otherGuest);
 
         request.setRequesterEmailAddress(currentGuest.getEmail());
         request.setRequesteeEmailAddress(otherGuest.getEmail());
         request.setRequestStatus("pending");
-
-        contactRequests.add(request);
-
-        currentGuest.setContactRequests(contactRequests);
-        otherGuest.setContactRequests(contactRequests);
+        request.setGuest(currentGuest);
 
         ContactRequest checkRequest = requestRepository.save(request);
-        Guest checkGuest1 = guest.save(currentGuest);
-        Guest checkGuest2 = guest.save(otherGuest);
+
+        Guest checkGuest1 = guest.findByEmail(currentGuest.getEmail());
+        Guest checkGuest2 = guest.findByEmail(otherGuest.getEmail());
 
         assertNotNull(checkGuest1.getGuestId());
         assertNotNull(checkGuest2.getGuestId());
@@ -289,7 +287,6 @@ public class UserTest {
         assertNotNull(checkGuest2.getContactRequests());
 
         assertEquals(1, checkGuest1.getContactRequests().size());
-        assertEquals(1, checkGuest2.getContactRequests().size());
         assertEquals(checkGuest1.getEmail(), checkGuest1.getContactRequests().iterator().next().getRequesterEmailAddress());
         assertEquals(checkGuest2.getEmail(), checkGuest1.getContactRequests().iterator().next().getRequesteeEmailAddress());
 
