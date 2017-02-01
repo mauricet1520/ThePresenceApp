@@ -55,14 +55,14 @@ public class PrescenceRestConroller {
     }
 
     @RequestMapping(path = "/get_all_requests.json", method = RequestMethod.GET)
-    public List<ContactRequest> getAllRequests(String guestEmailAddress) {
+    public Guest getAllRequests(String guestEmailAddress) {
         Guest guest = guests.findByEmail(guestEmailAddress);
         List<ContactRequest> requests = new ArrayList<ContactRequest>();
         for (ContactRequest request : guest.getContactRequests()) {
             requests.add(request);
         }
 
-        return requests;
+        return guest;
     }
 
     @RequestMapping(path = "/reject_status_request.json", method = RequestMethod.POST)
