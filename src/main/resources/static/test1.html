@@ -1,0 +1,19 @@
+<h2>this is test1.html</h2>
+<h2>{{testGlobalValue}}</h2>
+
+<ul>
+    <li ng-repeat="eventItem in eventList">
+        {{eventItem.eventName}}&nbsp; &nbsp;ADDRESS:{{eventItem.address}}&nbsp;&nbsp;LOCATION: {{eventItem.location}}&nbsp;
+        <input type="button" ng-click="getAttendees(eventItem.eventName)" value="Attendees"/>
+
+        <!--<ol>-->
+             <!--<li ng-repeat="guest in eventList.guests">-->
+                 <!--{{guest.firstName}}-->
+
+        <!--</li>-->
+
+        <!--</ol>-->
+
+    </li>
+
+</ul>

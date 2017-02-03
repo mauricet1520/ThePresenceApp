@@ -21,6 +21,10 @@ public class PrescenceRestConroller {
     RequestRepository theRequest;
 
     @Autowired
+    TestPersonRepository testPersonRepository;
+
+
+    @Autowired
     GuestRepository guests;
 
     @Autowired
@@ -225,6 +229,36 @@ public class PrescenceRestConroller {
         Guest currentGuest = guests.findByEmail(request.getEmail());
         return currentGuest;
     }
+
+    @RequestMapping(path = "/test_person.json", method = RequestMethod.GET)
+    public List<TestPerson> testPerson() {
+
+        List<TestPerson> personList = new ArrayList<>();
+
+        TestPerson testPersonAgain = new TestPerson();
+        TestPerson testPerson = new TestPerson();
+
+
+        testPersonAgain.setFirstName("Maurice");
+        testPersonAgain.setLastName("Thomas");
+        testPersonAgain.setProfession("student");
+
+        testPerson.setFirstName("Tom");
+        testPerson.setLastName("York");
+        testPerson.setProfession("student");
+
+        personList.add(testPerson);
+        personList.add(testPersonAgain);
+
+
+//        testPersonRepository.save(testPerson);
+//        testPersonRepository.save(testPersonAgain);
+
+        return personList;
+    }
+
+
+
 
 //    @RequestMapping(path = "/check_in_event.json", method = RequestMethod.POST)
 //    public List<MyEvent> checkIn() {
